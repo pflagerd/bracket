@@ -1,0 +1,421 @@
+Delivered-To: daniel.pflager@gmail.com
+Received: by 2002:a05:7022:124:b0:11f:349c:4277 with SMTP id 36csp6542824dlk;
+        Sat, 3 Jan 2026 10:47:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHzk/9tTTCPC0Y1++oyfuJDCFShLflS/a9eDnkwZHpepasfXmUjyA4gADJ04bkQ5l/BBavV
+X-Received: by 2002:a53:bbc3:0:b0:644:60d9:8647 with SMTP id 956f58d0204a3-6466a8dd60emr28554658d50.86.1767466077989;
+        Sat, 03 Jan 2026 10:47:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767466077; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NWAb63JK5iGOrQeu+TPpKdO7ag8v+gWJsZuEAAKcg1I7fr8nCBFE6NBwULNt5bLcKI
+         /hnrkXEb08alnp5beN2QBy4zo2T2YssqiAuqeMp3/AzLC8UG4vbHyPnyfEvYo5TZZ4Zy
+         tuU322+H+gq5j+PWVzAHTrlKaeMIAQvD52ubxUPO1Eco50Jp/j+rRJpYnUdr2FGy8BT1
+         Qwcb+dwIWxdBgAw4vminUxw6VHu3svabnhw8YTrZW0SZ7iuDU1M5b1AxSXO9RVW/a5D/
+         jaJaVVj5I8zPcUVN6ZdKZsf7SuDppvnGOL2l62tiyh6ba72bbqMEyGibtm1nS7BZ/cvR
+         VtLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=in-reply-to:message-id:from:subject:date:references:reply-to
+         :mime-version:to:dkim-signature;
+        bh=o8o6YRSY2sW6WFY1eP8m4GNC6Ts3+bRp5FYa/MVcUd4=;
+        fh=jK8C/qG2FonO0avaFI0/TPJmBiNr945/qFO1dGnXYrk=;
+        b=cj9Ejgf4sihQTRw1cl1j45+DgCi7AgQqoWanoBVmhwSFjFaTVO9E3USEgoOLWO477R
+         Qg1sVVHImFJRYh6ftz+Ys/c0aLNFufdyUChoH9TYJ1PjPZyAGRKCp3wufFVm83ZJil36
+         UKe9ERzNcv7ArOnkKMyNfmURUwxDh6Obi7cFEhPUIi4GwgWPgHA21UB/GgSFXUg62TfU
+         +TAovaHOZRneADP3TGQSl2SrStwYachu9fRRcHU3knfzd9RtiHwGpI2gVuxHPEGEkYg1
+         mwJiaXMYZhxRb5QZAJF82VoYIuylJuvr/HTlrtwSGT4M7tS2CnduLuZth7FY97pZ1Fz3
+         RStg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sendcutsend.com header.s=intercom header.b=ijDI8Yz7;
+       spf=pass (google.com: domain of bounces+215472521675634@outbound.intercom.sendcutsend.com designates 192.174.84.143 as permitted sender) smtp.mailfrom=bounces+215472521675634@outbound.intercom.sendcutsend.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=sendcutsend.com
+Return-Path: <bounces+215472521675634@outbound.intercom.sendcutsend.com>
+Received: from mta-174-84-143.intercom.com.sparkpostmail.com (mta-174-84-143.intercom.com.sparkpostmail.com. [192.174.84.143])
+        by mx.google.com with ESMTPS id 00721157ae682-78fb43deaacsi709217037b3.56.2026.01.03.10.47.57
+        for <daniel.pflager@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Jan 2026 10:47:57 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+215472521675634@outbound.intercom.sendcutsend.com designates 192.174.84.143 as permitted sender) client-ip=192.174.84.143;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sendcutsend.com header.s=intercom header.b=ijDI8Yz7;
+       spf=pass (google.com: domain of bounces+215472521675634@outbound.intercom.sendcutsend.com designates 192.174.84.143 as permitted sender) smtp.mailfrom=bounces+215472521675634@outbound.intercom.sendcutsend.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=sendcutsend.com
+Return-Path: <bounces+215472521675634@outbound.intercom.sendcutsend.com>
+X-MSFBL: V/jSK35d3+OBAaS0X4DfjRB4pYaGtPtoU0Q8LizPsdM=|eyJ0ZW5hbnRfaWQiOiJ
+	pbnRlcmNvbSIsInN1YmFjY291bnRfaWQiOiIzNzI4MDEiLCJjdXN0b21lcl9pZCI
+	6IjEiLCJyIjoiZGFuaWVsLnBmbGFnZXJAZ21haWwuY29tIiwibWVzc2FnZV9pZCI
+	6IjY5NTU1ZDY0NTk2OThjODQwYjBhIn0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendcutsend.com;
+	s=intercom; t=1767466077; i=@sendcutsend.com;
+	bh=o8o6YRSY2sW6WFY1eP8m4GNC6Ts3+bRp5FYa/MVcUd4=;
+	h=To:Content-Type:Date:Subject:From:Message-ID:From:To:Cc:Subject;
+	b=ijDI8Yz7KzTHgK/dqbFZ0ge3ZYXoM0DulIyGpoMN06mq6J/mQNBfVaC5iJBlJNWeh
+	 KcYPJJ6b/leYgdOswDmSYbCEBVwb2e2R0tjiQ9ZxttGA85PXluPbqMpgbkINsgX/cE
+	 +cZNfZ6D3VUtklcCXNkGgrWakmzNp0bqJN7gUtok=
+Received: from [10.90.9.124] ([10.90.9.124])
+	by i-0ac49b32e5a4d97b8.mta2vrest.sd.prd.sparkpost (ecelerity 5.1.0.74856 r(msys-ecelerity:tags/5.1.0.29)) with REST
+	id A0/B8-27135-D5469596; Sat, 03 Jan 2026 18:47:57 +0000
+To: daniel.pflager@gmail.com
+Content-Type: multipart/alternative; boundary="_----hrlVb0nYCLs9TjZ5o9hvhg===_30/B8-27135-D5469596"
+MIME-Version: 1.0
+Reply-To: Darren from SendCutSend <support@sendcutsend.com>
+References: <25e975e4982c58636de7e3ad0f5c3f7528b9766f@intercom> <CAEY+AnO8ptSQRdB1eoUYnEN9kO-wOj5vUskaATNdZ3J_bNO8qA@mail.gmail.com> <CAEY+AnMdE_DUzxQRg10YL9HfPpg=2Fq69FnYJPm7b_23jAW+1w@mail.gmail.com> <3b9de0e4-26a9263a-1767401692-215472521675634-2197691@outbound.intercom.sendcutsend.com> <CAEY+AnO1a8v6CxTWbb4y7LAi99foTFXMEA58e5Qw-6xXo_RMzg@mail.gmail.com>
+Date: Sat, 03 Jan 2026 18:47:57 +0000
+Subject: Re: How to add bending instructions to drawing
+X-Intercom-Comment-Id: 36938783182
+X-Intercom-Notification-Reason: support_email
+X-Intercom-Bin: proven_users
+From: "Darren from SendCutSend" <support@sendcutsend.com>
+Message-ID: <1d44037e-dd8d6b37-1767466077-215472521675634-2197691@outbound.intercom.sendcutsend.com>
+X-Report-Abuse: Please report spam or abuse to abuse@intercom.io
+X-Intercom-App-Id: u6ia6iw3
+In-Reply-To: <CAEY+AnO8ptSQRdB1eoUYnEN9kO-wOj5vUskaATNdZ3J_bNO8qA@mail.gmail.com>
+X-Auto-Response-Suppress: OOF, AutoReply
+X-Mailgun-Variables: {"app_id":"u6ia6iw3","conversation_id":"215472521675634","intercom_message_id":3366000441,"user_id":"6531fa3c16dba2187db1c100"}
+
+--_----hrlVb0nYCLs9TjZ5o9hvhg===_30/B8-27135-D5469596
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Daniel, =0D=0A =0D=0A You can export a STEP file from FreeCAD. Before yo=
+u export your STEP file, ensure that it meets our 3D File Guidelines. =0D=
+=0A =0D=0A To save a STEP file, from the 3D-View select (in the tree-view) =
+the solid(s) to export and select =E2=80=9CFile -&gt; Export=E2=80=9D. You =
+can reference how to export a STEP file in FreeCAD=E2=80=99s online guidanc=
+e. =0D=0A =0D=0A Can you give that a try and let us know if it works=3F
+--_----hrlVb0nYCLs9TjZ5o9hvhg===_30/B8-27135-D5469596
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/htm=
+l4/strict.dtd">=0D=0A<html style=3D"background-color: #fff;">=0D=0A<head>=
+=0D=0A<meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Ty=
+pe">=0D=0A<meta name=3D"viewport" content=3D"width=3Ddevice-width">=0D=0A<m=
+eta name=3D"format-detection" content=3D"telephone=3Dno">=0D=0A<!-- Resets =
+-->=0D=0A=0D=0A<style type=3D"text/css" data-premailer=3D"ignore">=0D=0A  #=
+outlook a{=0D=0A    padding: 0;=0D=0A  }=0D=0A  body{=0D=0A    -webkit-text=
+-size-adjust: none;=0D=0A    -ms-text-size-adjust: none;=0D=0A    font-weig=
+ht: 400;=0D=0A  }=0D=0A  .ReadMsgBody{=0D=0A    width: 100%;=0D=0A  }=0D=0A=
+  .ExternalClass{=0D=0A    width: 100%;=0D=0A  }=0D=0A  img {=0D=0A    bord=
+er: 0;=0D=0A    max-width: 100%;=0D=0A    height: auto;=0D=0A    outline: n=
+one;=0D=0A    display: inline-block;=0D=0A    margin: 0;=0D=0A    padding: =
+0;=0D=0A    text-decoration: none;=0D=0A    line-height: 100%;=0D=0A  }=0D=
+=0A  #backgroundTable{=0D=0A    height: 100% !important;=0D=0A    margin: 0=
+;=0D=0A    padding: 0;=0D=0A    width: 100% !important;=0D=0A  }=0D=0A</sty=
+le>=0D=0A<!-- Main styles -->=0D=0A=0D=0A<style type=3D"text/css">=0D=0A  /=
+**=0D=0A   * Generic=0D=0A   */=0D=0A=0D=0A  html {=0D=0A    background-col=
+or: #fff;=0D=0A  }=0D=0A=0D=0A  .main {=0D=0A    font-family: Helvetica, Ar=
+ial, sans-serif;=0D=0A    letter-spacing: 0;=0D=0A    width: 100%;=0D=0A  }=
+=0D=0A=0D=0A  table {=0D=0A    border-spacing: 0;=0D=0A    border-collapse:=
+ separate;=0D=0A    table-layout: fixed;=0D=0A  }=0D=0A=0D=0A  td {=0D=0A  =
+  padding: 0;=0D=0A    font-family: Helvetica, Arial, sans-serif;=0D=0A  }=
+=0D=0A=0D=0A  a {=0D=0A    border: none;=0D=0A    outline: none !important;=
+=0D=0A  }=0D=0A=0D=0A=0D=0A  /**=0D=0A   * Content=0D=0A   */=0D=0A=0D=0A  =
+=2Econtent-td {=0D=0A    line-height: 20px;=0D=0A    font-size: 14px;=0D=0A=
+  }=0D=0A=0D=0A  .content-td .article-card,=0D=0A  .content-td .intercom-in=
+terblocks-link-content-container {=0D=0A    max-width: 500px;=0D=0A    bord=
+er: 1px solid #e0e0e0;=0D=0A    border-radius: 2px;=0D=0A    padding: 0;=0D=
+=0A    margin-bottom: 15px;=0D=0A  }=0D=0A=0D=0A  .content-td .article-card=
+ .intercom-interblocks-link-content-container {=0D=0A    border: none;=0D=
+=0A  }=0D=0A=0D=0A  .content-td .messenger-card table {=0D=0A    border: no=
+ne;=0D=0A  }=0D=0A=0D=0A  .events {=0D=0A    background-color: #F5F5F5;=0D=
+=0A    border-collapse: separate;=0D=0A    border-spacing: 10px;=0D=0A    t=
+able-layout: fixed;=0D=0A    border-radius: 5px;=0D=0A    border: 1px solid=
+ #E5E5E5;=0D=0A    padding: 0px 15px 0px 15px;=0D=0A  }=0D=0A=0D=0A  .conte=
+nt-td .ratings td,=0D=0A  .content-td .fin-reply-options-old td,=0D=0A  .co=
+ntent-td .messenger-card td {=0D=0A    border: 0;=0D=0A    padding: 0;=0D=
+=0A  }=0D=0A=0D=0A  .content-td .fin-reply-options td {=0D=0A    border: no=
+ne;=0D=0A    padding: 0;=0D=0A  }=0D=0A=0D=0A  .content-td .messenger-card =
+td {=0D=0A    text-align: center;=0D=0A  }=0D=0A=0D=0A  .content-td .messen=
+ger-card td p {=0D=0A    font-size: 14px;=0D=0A    color: #6e7a89;=0D=0A   =
+ text-align: center;=0D=0A  }=0D=0A=0D=0A=0D=0A  .rating-link {=0D=0A    ma=
+x-width: 27px;=0D=0A    min-height: 27px;=0D=0A  }=0D=0A=0D=0A  .content-td=
+ > :first-child {=0D=0A    margin-top: 0;=0D=0A    padding-top: 0;=0D=0A  }=
+=0D=0A=0D=0A  .content-td h1 {=0D=0A    font-size: 1.3em;=0D=0A    font-wei=
+ght: bold;=0D=0A    line-height: 25px;=0D=0A    margin-top: 20px;=0D=0A    =
+margin-bottom: 5px;=0D=0A  }=0D=0A=0D=0A  .content-td h1 + h2 {=0D=0A    ma=
+rgin-top: 0 !important;=0D=0A  }=0D=0A=0D=0A  .content-td h2 + h1 {=0D=0A  =
+  margin-top: 0 !important;=0D=0A  }=0D=0A=0D=0A  .content-td h2 {=0D=0A   =
+ font-size: 1.1em;=0D=0A    font-weight: bold;=0D=0A    margin: 20px 0 5px;=
+=0D=0A  }=0D=0A=0D=0A  .content-td h3 ,=0D=0A  .content-td h4 ,=0D=0A  .con=
+tent-td h5 {=0D=0A    font-size: 13px;=0D=0A    font-weight: bold;=0D=0A   =
+ margin-bottom: 5px;=0D=0A  }=0D=0A=0D=0A  .content-td p {=0D=0A    margin:=
+ 0 0 15px 0;=0D=0A  }=0D=0A=0D=0A  .content-td p.no-margin {=0D=0A    margi=
+n: 0;=0D=0A    min-height: 15px;=0D=0A  }=0D=0A=0D=0A  .content-td p img,=
+=0D=0A  .content-td h1 img,=0D=0A  .content-td h2 img,=0D=0A  .content-td l=
+i img,=0D=0A  .content-td .intercom-h2b-button img {=0D=0A    margin: 0;=0D=
+=0A    padding: 0;=0D=0A    vertical-align: top;=0D=0A  }=0D=0A=0D=0A  .con=
+tent-td a {=0D=0A    color: #1251ba;=0D=0A    text-decoration: underline;=
+=0D=0A  }=0D=0A=0D=0A  .content-td .messenger-card .link {=0D=0A    margin-=
+bottom: 25px;=0D=0A  }=0D=0A=0D=0A  .content-td strong {=0D=0A    color: #6=
+06060;=0D=0A  }=0D=0A=0D=0A  .content-td ol,=0D=0A  .content-td ul {=0D=0A =
+   margin: 0 0 20px 40px;=0D=0A    padding: 0;=0D=0A    list-style: disc;=
+=0D=0A  }=0D=0A=0D=0A  .content-td ol {=0D=0A    list-style: decimal;=0D=0A=
+  }=0D=0A=0D=0A  .content-td ol li,=0D=0A  .content-td ul li {=0D=0A    mar=
+gin: 5px 0;=0D=0A  }=0D=0A=0D=0A  .content-td blockquote {=0D=0A    padding=
+: 10px 0;=0D=0A    margin: 10px 0;=0D=0A    font-style: italic;=0D=0A  }=0D=
+=0A=0D=0A  .content-td blockquote a {=0D=0A    color: #8C8C8C;=0D=0A  }=0D=
+=0A=0D=0A  .content-td img {=0D=0A    max-width: 100%;=0D=0A    margin: 15p=
+x 0 15px;=0D=0A  }=0D=0A=0D=0A  .content-td .intercom-container {=0D=0A    =
+margin-bottom: 16px;=0D=0A  }=0D=0A=0D=0A  .content-td hr {=0D=0A    border=
+: none;=0D=0A    border-top: 1px solid #DDD;=0D=0A    border-bottom: 0;=0D=
+=0A    margin: 20px 0;=0D=0A  }=0D=0A=0D=0A  .content-td table th {=0D=0A  =
+  font-weight: bold;=0D=0A    background: #F6F6F6;=0D=0A  }=0D=0A=0D=0A  .c=
+ontent-td table td,=0D=0A  .content-td table th {=0D=0A    padding: 7px 10p=
+x;=0D=0A    border: 1px solid #DADADA;=0D=0A    text-align: left;=0D=0A    =
+vertical-align: top;=0D=0A  }=0D=0A=0D=0A  .content-td table {=0D=0A    mar=
+gin-bottom: 20px;=0D=0A    border-collapse: collapse;=0D=0A    border-spaci=
+ng: 0;=0D=0A  }=0D=0A=0D=0A  .content-td table.intercom-container.intercom-=
+align-center {=0D=0A    margin-left: auto;=0D=0A    margin-right: auto;=0D=
+=0A  }=0D=0A=0D=0A  .content-td table.intercom-container td {=0D=0A    bord=
+er: none;=0D=0A    padding: 0;=0D=0A    margin: 0;=0D=0A  }=0D=0A=0D=0A  .c=
+ontent-td a.reply-in-messenger-button {=0D=0A    background-color: #286efa;=
+=0D=0A    color: white;=0D=0A    padding: 6px 25px;=0D=0A    margin: 0px 0 =
+16px 0;=0D=0A    border-radius: 20px;=0D=0A    text-decoration: none;=0D=0A=
+    display: inline-block;=0D=0A    font-size: 12px;=0D=0A  }=0D=0A=0D=0A  =
+=2Econtent-td p.reply-in-messenger-message {=0D=0A    color: #8c8c8c;=0D=0A=
+    font-size: 12px;=0D=0A    margin: 0;=0D=0A  }=0D=0A=0D=0A  table.rating=
+s,=0D=0A  .content-td .messenger-card {=0D=0A      border-collapse: separat=
+e;=0D=0A      border-spacing: 0;=0D=0A      table-layout: fixed;=0D=0A     =
+ border-radius: 5px;=0D=0A      border: 1px solid #dadfe3;=0D=0A      margi=
+n-bottom: 0;=0D=0A  }=0D=0A=0D=0A  table.fin-reply-options {=0D=0A      bor=
+der-collapse: separate;=0D=0A      border-spacing: 0;=0D=0A      table-layo=
+ut: fixed;=0D=0A      margin: 0;=0D=0A  }=0D=0A=0D=0A  td .fin-reply-button=
+ {=0D=0A      color: #0A2C93;=0D=0A      text-decoration: none;=0D=0A      =
+border: 1px solid #FFFFFF !important;=0D=0A      border-radius: 40px;=0D=0A=
+      background-color: #E7ECFE;=0D=0A      padding: 8px 16px;=0D=0A      d=
+isplay: block;=0D=0A      margin-right: 10px;=0D=0A  }=0D=0A=0D=0A  td .fin=
+-reply-button-layout-updated {=0D=0A      color: #0A2C93;=0D=0A      text-d=
+ecoration: none;=0D=0A      border-radius: 40px;=0D=0A      background-colo=
+r: #E7ECFE;=0D=0A      padding: 8px 16px;=0D=0A      display: block;=0D=0A =
+ }=0D=0A=0D=0A  td .fin-reply-button:hover {=0D=0A    background-color: #D3=
+DCFF !important;=0D=0A  }=0D=0A=0D=0A  .content-td table.ratings {=0D=0A   =
+   width: 260px;=0D=0A      padding: 16px 0;=0D=0A  }=0D=0A=0D=0A  table.ra=
+tings {=0D=0A      padding: 16px 0;=0D=0A  }=0D=0A=0D=0A  .content-td .rati=
+ngs table img {=0D=0A      margin: 0;=0D=0A  }=0D=0A=0D=0A  .align_top {=0D=
+=0A    vertical-align: top;=0D=0A  }=0D=0A=0D=0A  .align_center {=0D=0A    =
+  margin: 0 auto;=0D=0A  }=0D=0A=0D=0A  /**=0D=0A   * Footer=0D=0A   */=0D=
+=0A   .smiley {=0D=0A     padding: 4px;=0D=0A   }=0D=0A   .feedback_item:fi=
+rst-child .smiley {=0D=0A     padding-left: 0;=0D=0A   }=0D=0A  .divider {=
+=0D=0A    border: none;=0D=0A    height: 1px;=0D=0A    color: #f0f0f0;=0D=
+=0A    background-color: #f0f0f0;=0D=0A    margin: 0;=0D=0A  }=0D=0A  .feed=
+back-text {=0D=0A    margin-bottom: 0.3em;=0D=0A    margin-top: 0;=0D=0A  }=
+=0D=0A  .deemphasized_text {=0D=0A    color: #8c8c8c;=0D=0A  }=0D=0A  .sent=
+_to_text {=0D=0A    font-weight: bold;=0D=0A  }=0D=0A  .dark_text {=0D=0A  =
+  color: #222;=0D=0A  }=0D=0A  .light_text {=0D=0A    color: #999;=0D=0A  }=
+=0D=0A  .align_middle {=0D=0A    vertical-align: middle !important;=0D=0A  =
+}=0D=0A=0D=0A  .history .history_content {=0D=0A    font-style: normal;=0D=
+=0A    padding-top: 1px;=0D=0A    border-left: 1px #ccc solid;=0D=0A    mar=
+gin: 0 0 0 .8ex;=0D=0A    padding-left: 1ex;=0D=0A  }=0D=0A  .history .hist=
+ory_content > *:last-child {=0D=0A    margin-bottom: 0;=0D=0A  }=0D=0A  .po=
+wered_by_badge {=0D=0A    font-size: 14px;=0D=0A  }=0D=0A  .powered_by_link=
+ {=0D=0A    color: #8c8c8c;=0D=0A    font-weight: bold;=0D=0A    text-decor=
+ation: none;=0D=0A  }=0D=0A=0D=0A  /**=0D=0A    * Email signature=0D=0A    =
+*/=0D=0A  .email_signature .container {=0D=0A      margin-inline-start: 0;=
+=0D=0A  }=0D=0A  .email_signature th {=0D=0A      font-weight: normal;=0D=
+=0A  }=0D=0A  .email_signature p,=0D=0A  .email_signature h1,=0D=0A  .email=
+_signature h2 {=0D=0A      margin: 0;=0D=0A      padding: 0;=0D=0A      tex=
+t-align: start;=0D=0A  }=0D=0A=0D=0A  .history {=0D=0A    color: #500050;=
+=0D=0A  }=0D=0A=0D=0A  /**=0D=0A   * Ticket with attributes=0D=0A   */=0D=
+=0A=0D=0A  .ticket_card {=0D=0A    border: 1px solid #E1E1E1;=0D=0A    bord=
+er-radius: 8px;=0D=0A    width: 100%;=0D=0A    max-width: 570px;=0D=0A    w=
+ord-wrap: break-word;=0D=0A  }=0D=0A=0D=0A  .ticket_card .app_logo {=0D=0A =
+     width: 100%;=0D=0A      padding: 18px 40px;=0D=0A      border-bottom: =
+1px solid #E1E1E1;=0D=0A  }=0D=0A=0D=0A  .ticket_card .app_logo img {=0D=0A=
+      height: 26px !important;=0D=0A      max-height: 26px !important;=0D=
+=0A      max-width: 100%;=0D=0A  }=0D=0A=0D=0A  .ticket_card .body {=0D=0A =
+     padding: 28px 40px;=0D=0A      font-size: 14px;=0D=0A      font-weight=
+: 400;=0D=0A      line-height: 16px;=0D=0A      width: 100%;=0D=0A  }=0D=0A=
+=0D=0A  .collapsed_ticket_card .title,=0D=0A  .ticket_card .title {=0D=0A  =
+    font-size: 18px;=0D=0A      font-weight: 700;=0D=0A      line-height: 2=
+4px;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_state_description {=0D=0A  =
+    font-size: 16px;=0D=0A      line-height: 20px;=0D=0A      padding-botto=
+m: 24px;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_state_step {=0D=0A     =
+ border-radius: 8px;=0D=0A      height: 4px;=0D=0A      margin-bottom: 8px;=
+=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_state_submitted {=0D=0A      ba=
+ckground-color: #334bfa;=0D=0A      border-color: #334bfa;=0D=0A  }=0D=0A=
+=0D=0A  .ticket_card .ticket_state_in_progress {=0D=0A      background-colo=
+r: #b24d00;=0D=0A      border-color: #b24d00;=0D=0A  }=0D=0A=0D=0A  .ticket=
+_card .ticket_state_waiting_on_customer {=0D=0A      background-color: #db0=
+629;=0D=0A      border-color: #db0629;=0D=0A  }=0D=0A=0D=0A  .ticket_card .=
+ticket_state_resolved {=0D=0A      background-color: #0f7134;=0D=0A      bo=
+rder-color: #0f7134;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_custom_stat=
+e_submitted {=0D=0A      background-color: #334bfa;=0D=0A      border-color=
+: #334bfa;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_custom_state_in_progr=
+ess {=0D=0A      background-color: #334bfa;=0D=0A      border-color: #334bf=
+a;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_custom_state_waiting_on_custo=
+mer {=0D=0A      background-color: #b24d00;=0D=0A      border-color: #b24d0=
+0;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_custom_state_resolved {=0D=0A=
+      background-color: #0f7134;=0D=0A      border-color: #0f7134;=0D=0A  }=
+=0D=0A=0D=0A  .ticket_card .ticket_state_inactive {=0D=0A      background-c=
+olor: #DADADA;=0D=0A      border-color: #DADADA;=0D=0A  }=0D=0A=0D=0A  .tic=
+ket_card .ticket_progress {=0D=0A      font-size: 13px;=0D=0A      line-hei=
+ght: 16px;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_state_label_inactive =
+{=0D=0A      color: #757575;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_sta=
+te_label_active {=0D=0A      font-weight: 700;=0D=0A  }=0D=0A=0D=0A  .ticke=
+t_card .ticket_state_label {=0D=0A      margin-bottom: 4px;=0D=0A  }=0D=0A=
+=0D=0A  .ticket_custom_state .label {=0D=0A      font-size: 16px;=0D=0A    =
+  font-style: normal;=0D=0A      font-weight: 700;=0D=0A      line-height: =
+30px;=0D=0A  }=0D=0A=0D=0A  .ticket_custom_state .submitted {=0D=0A      co=
+lor: #334bfa;=0D=0A  }=0D=0A=0D=0A  .ticket_custom_state .in_progress {=0D=
+=0A      color: #334bfa;=0D=0A  }=0D=0A=0D=0A  .ticket_custom_state .waitin=
+g_on_customer {=0D=0A      color: #b24d00;=0D=0A  }=0D=0A=0D=0A  .ticket_cu=
+stom_state .resolved {=0D=0A      color: #0f7134;=0D=0A  }=0D=0A=0D=0A  .ti=
+cket_card .attribute_name {=0D=0A      font-weight: 600;=0D=0A      word-wr=
+ap: break-word;=0D=0A  }=0D=0A=0D=0A  [dir=3D"rtl"] .ticket_card .ticket_st=
+ate_spacing {=0D=0A      padding-left: 8px;=0D=0A  }=0D=0A=0D=0A  [dir=3D"l=
+tr"] .ticket_card .ticket_state_spacing {=0D=0A      padding-right: 8px;=0D=
+=0A  }=0D=0A=0D=0A  [dir=3D"rtl"] .ticket_card .attribute_name {=0D=0A     =
+ padding: 8px 0 8px 16px;=0D=0A  }=0D=0A=0D=0A  [dir=3D"ltr"] .ticket_card =
+=2Eattribute_name {=0D=0A      padding: 8px 16px 8px 0;=0D=0A  }=0D=0A=0D=
+=0A  .ticket_card .attribute_value {=0D=0A      word-wrap: break-word;=0D=
+=0A      padding: 8px 0;=0D=0A  }=0D=0A=0D=0A  .ticket_card .ticket_descrip=
+tion {=0D=0A      padding-bottom: 24px;=0D=0A  }=0D=0A=0D=0A  .reply_in_mes=
+senger_card {=0D=0A    background: #F5F5F5;=0D=0A    border-radius: 8px;=0D=
+=0A    width: 100%;=0D=0A    max-width: 570px;=0D=0A    word-wrap: break-wo=
+rd;=0D=0A    padding: 16px;=0D=0A  }=0D=0A=0D=0A  .reply_in_messenger_card =
+=2Etitle {=0D=0A    font-size: 16px;=0D=0A    font-weight: 600;=0D=0A    li=
+ne-height: 24px;=0D=0A    word-wrap: break-word;=0D=0A  }=0D=0A=0D=0A  .rep=
+ly_in_messenger_card .body {=0D=0A    font-size: 14px;=0D=0A    font-weight=
+: 400;=0D=0A    line-height: 20px;=0D=0A    word-wrap: break-word;=0D=0A   =
+ padding-top: 8px;=0D=0A  }=0D=0A=0D=0A  .chat_notification_container {=0D=
+=0A    width: 100%;=0D=0A    max-width: 570px;=0D=0A    font-size: 14px;=0D=
+=0A    font-weight: 400;=0D=0A    line-height: 20px;=0D=0A    word-wrap: br=
+eak-word;=0D=0A  }=0D=0A=0D=0A  [dir=3D"rtl"] .chat_notification_container =
+=2Eadmin_avatar_wrapper {=0D=0A    padding-left: 16px;=0D=0A  }=0D=0A=0D=0A=
+  [dir=3D"rtl"] .chat_notification_container .user_avatar_wrapper {=0D=0A  =
+    padding-right: 16px;=0D=0A  }=0D=0A=0D=0A  [dir=3D"ltr"] .chat_notifica=
+tion_container .admin_avatar_wrapper {=0D=0A      padding-right: 16px;=0D=
+=0A  }=0D=0A=0D=0A  [dir=3D"ltr"] .chat_notification_container .user_avatar=
+_wrapper {=0D=0A      padding-left: 16px;=0D=0A  }=0D=0A=0D=0A  [dir=3D"ltr=
+"] .chat_notification_container .message_bubble {=0D=0A      margin-left: a=
+uto;=0D=0A  }=0D=0A=0D=0A  [dir=3D"rtl"] .chat_notification_container .mess=
+age_bubble {=0D=0A      margin-right: auto;=0D=0A  }=0D=0A=0D=0A  .chat_not=
+ification_container .user_avatar_wrapper .initials_avatar {=0D=0A      bord=
+er-radius: 100px;=0D=0A      color: white;=0D=0A      font-size: 12px;=0D=
+=0A      height: 28px;=0D=0A      line-height: 28px;=0D=0A      width: 28px=
+;=0D=0A      text-align: center;=0D=0A  }=0D=0A=0D=0A  .chat_notification_c=
+ontainer .comment_wrapper {=0D=0A    padding: 12px 16px;=0D=0A    border-ra=
+dius: 10px;=0D=0A    background: #F5F5F5;=0D=0A  }=0D=0A=0D=0A  .chat_notif=
+ication_container .comment_wrapper p {=0D=0A    margin: 0;=0D=0A  }=0D=0A=
+=0D=0A  .chat_notification_container .brand_logo img {=0D=0A      height: 2=
+6px !important;=0D=0A      max-height: 26px !important;=0D=0A      max-widt=
+h: 100%;=0D=0A  }=0D=0A=0D=0A  .chat_notification_container .comment_wrappe=
+r img {=0D=0A    max-width: 100% !important;=0D=0A  }=0D=0A=0D=0A  .collaps=
+ed_ticket_card {=0D=0A    border: 1px solid #E1E1E1;=0D=0A    border-radius=
+: 8px;=0D=0A    padding: 12px 20px;=0D=0A  }=0D=0A=0D=0A  .align_middle {=
+=0D=0A    vertical-align: middle;=0D=0A  }=0D=0A=0D=0A  @media (max-width: =
+768px) {=0D=0A    .ticket_card .app_logo {=0D=0A      padding: 18px !import=
+ant;=0D=0A    }=0D=0A=0D=0A    .ticket_card .body {=0D=0A      padding: 18p=
+x !important;=0D=0A    }=0D=0A=0D=0A    [dir=3D"rtl"] .ticket_card .ticket_=
+state_spacing {=0D=0A      padding-left: 2px !important;=0D=0A    }=0D=0A=
+=0D=0A    [dir=3D"ltr"] .ticket_card .ticket_state_spacing {=0D=0A      pad=
+ding-right: 2px !important;=0D=0A    }=0D=0A=0D=0A    .ticket_card .ticket_=
+state_spacing {=0D=0A      padding-right: 2px !important;=0D=0A    }=0D=0A=
+=0D=0A    .ticket_card .ticket_description {=0D=0A      padding-bottom: 16p=
+x !important;=0D=0A    }=0D=0A=0D=0A    .fin-reply-options table,=0D=0A    =
+=2Efin-reply-options tbody,=0D=0A    .fin-reply-options th,=0D=0A    .fin-r=
+eply-options td,=0D=0A    .fin-reply-options tr {=0D=0A      display: block=
+;=0D=0A    }=0D=0A=0D=0A    .fin-reply-options,=0D=0A    .fin-reply-options=
+ td {=0D=0A      width: 100%;=0D=0A    }=0D=0A=0D=0A    .fin-reply-button-w=
+rapper {=0D=0A      padding: 0 !important;=0D=0A    }=0D=0A=0D=0A    td .fi=
+n-reply-button {=0D=0A      margin: 4px 0 !important;=0D=0A    }=0D=0A  }=
+=0D=0A=0D=0A</style>=0D=0A=0D=0A<!-- Outlook.com -->=0D=0A<style type=3D"te=
+xt/css" data-premailer=3D"ignore">=0D=0A  .content-td blockquote + * {=0D=
+=0A    margin-top: 10px !important;=0D=0A  }=0D=0A=0D=0A  .ExternalClass .c=
+ontent-td h1 {=0D=0A    padding: 15px 0 5px 0 !important;=0D=0A  }=0D=0A=0D=
+=0A  .ExternalClass .content-td h2 {=0D=0A    padding: 0 0 5px 0 !important=
+;=0D=0A  }=0D=0A=0D=0A  .ExternalClass .content-td p {=0D=0A    padding: 10=
+px 0 !important;=0D=0A  }=0D=0A=0D=0A  .ExternalClass .content-td hr + * {=
+=0D=0A    padding-top: 20px !important;=0D=0A  }=0D=0A=0D=0A  .ExternalClas=
+s .content-td .intercom-container {=0D=0A    padding: 5px 0 !important;=0D=
+=0A  }=0D=0A=0D=0A  .ExternalClass .content-td ol ,=0D=0A  .ExternalClass .=
+content-td ul {=0D=0A    padding: 0 0 20px 40px !important;=0D=0A    margin=
+: 0 !important;=0D=0A  }=0D=0A=0D=0A  img {=0D=0A    max-width: 600px !impo=
+rtant;=0D=0A  }=0D=0A  @media (max-width: 600px) {=0D=0A    img {=0D=0A    =
+  max-width: 100% !important;=0D=0A    }=0D=0A  }=0D=0A</style>=0D=0A=0D=0A=
+=0D=0A<!-- Outlook fix -->=0D=0A=0D=0A<!--[if gte mso 9]>=0D=0A    <style t=
+ype=3D"text/css">=0D=0A      table {=0D=0A        border-collapse: collapse=
+ !important;=0D=0A      }=0D=0A      td {=0D=0A        border-collapse: col=
+lapse !important;=0D=0A      }=0D=0A    </style>=0D=0A<![endif]-->=0D=0A=0D=
+=0A</head>=0D=0A=0D=0A<body id=3D"admin_reply" dir=3D"ltr">=0D=0A<div style=
+=3D"color:transparent;visibility:hidden;opacity:0;font-size:0px;border:0;ma=
+x-height:1px;width:1px;margin:0px;padding:0px;border-width:0px!important;di=
+splay:none!important;line-height:0px!important;"><img border=3D"0" width=3D=
+"1" height=3D"1" src=3D"https://sendcutsend.intercom-mail.com/q/_SFtl16zKe7=
+3Zi5nWJSQmA~~/AAAAARA~/LtGHYFiVTQ3QTTINevOepy-fMOLUqWxI-MLr7_1FSOsznjsPsFNk=
+k4-89tZ-ak93Ha8q9vqxWVuMGfPY66_FPg~~" alt=3D""/></div>=0D=0A=0D=0A  <table =
+cellspacing=3D"0" border=3D"0" cellpadding=3D"0" align=3D"center" bgcolor=
+=3D"transparent" class=3D"main" style=3D"font-family: Helvetica, Arial, san=
+s-serif; letter-spacing: 0; width: 100%; border-spacing: 0; border-collapse=
+: separate; table-layout: fixed;">=0D=0A    <tbody>=0D=0A        <tr>=0D=0A=
+  <td style=3D"font-family: Helvetica, Arial, sans-serif; padding: 0;">=0D=
+=0A    <table id=3D"reply_email" style=3D"table-layout: auto; border-spacin=
+g: 0; border-collapse: separate;">=0D=0A      <tbody>=0D=0A=0D=0A      <tr>=
+=0D=0A        <td class=3D"content-td" style=3D"font-family: Helvetica, Ari=
+al, sans-serif; line-height: 20px; font-size: 14px; padding: 0 0 16px;">=0D=
+=0A              <div style=3D"margin-top: 0; padding-top: 0;">=0D=0A<p cla=
+ss=3D"no-margin" style=3D"min-height: 15px; margin: 0;">Hi Daniel,</p>=0D=
+=0A<p class=3D"no-margin" style=3D"min-height: 15px; margin: 0;"><br></p>=
+=0D=0A<p class=3D"no-margin" style=3D"min-height: 15px; margin: 0;">You can=
+ export a STEP file from FreeCAD. Before you export your STEP file, ensure =
+that it meets our <b><a href=3D"https://sendcutsend.com/guidelines/3d-files=
+/" target=3D"_blank" class=3D"intercom-content-link" style=3D"outline: none=
+ !important; color: #1251ba; text-decoration: underline; border-style: none=
+;">3D File Guidelines</a></b>.</p>=0D=0A<p class=3D"no-margin" style=3D"min=
+-height: 15px; margin: 0;"><br></p>=0D=0A<p class=3D"no-margin" style=3D"mi=
+n-height: 15px; margin: 0;">To save a STEP file, from the 3D-View select (i=
+n the tree-view) the solid(s) to export and select =E2=80=9CFile -&gt; Expo=
+rt=E2=80=9D. You can reference how to export a STEP file in <b><a href=3D"h=
+ttps://wiki.freecad.org/FreeCAD_Howto_Import_Export#Step_with_Colors_2" tar=
+get=3D"_blank" class=3D"intercom-content-link" style=3D"outline: none !impo=
+rtant; color: #1251ba; text-decoration: underline; border-style: none;">Fre=
+eCAD=E2=80=99s online guidance</a></b>.</p>=0D=0A<p class=3D"no-margin" sty=
+le=3D"min-height: 15px; margin: 0;"><br></p>=0D=0A<p class=3D"no-margin" st=
+yle=3D"min-height: 15px; margin: 0;">Can you give that a try and let us kno=
+w if it works=3F</p>=0D=0A</div>=0D=0A        </td>=0D=0A      </tr>=0D=0A=
+=0D=0A=0D=0A        <tr>=0D=0A            <td style=3D"font-family: Helveti=
+ca, Arial, sans-serif; padding: 0;">=0D=0A              <div class=3D"email=
+_signature" style=3D"">=0D=0A                <table border=3D"0" style=3D"b=
+order-spacing: 0; border-collapse: separate; table-layout: fixed;">=0D=0A  =
+<tbody>=0D=0A    <tr>=0D=0A      <td valign=3D"top" width=3D"40" style=3D"f=
+ont-family: Helvetica, Arial, sans-serif; padding: 0;"><img width=3D"40" he=
+ight=3D"40" src=3D"https://downloads.intercomcdn.com/i/o/823223377/742d8a29=
+37af97e0d59759ef/scs-logo-laser.png=3Fexpires=3D1782967788&amp;signature=3D=
+1be0975c05cb6c5a4bd116053ec184af69e061b33e12854600a8f8e825ccfb21&amp;req=3D=
+fCIkFMt9noZYFb4S23SwhSPXx610FlZpKiFaR259Y0mcDTpUI2lqdbjf32ze%0Au%2Fw30Djogw=
+%3D%3D%0A"></td>=0D=0A      <td width=3D"4" style=3D"font-family: Helvetica=
+, Arial, sans-serif; padding: 0;"></td>=0D=0A      <td valign=3D"top" style=
+=3D"font-family: Helvetica, Arial, sans-serif; padding: 0;">=0D=0A<p style=
+=3D"text-align: start; margin: 0; padding: 0;" align=3D"start"><b>Darren</b=
+></p>=0D=0A<p style=3D"text-align: start; margin: 0; padding: 0;" align=3D"=
+start">SendCutSend</p>=0D=0A<p style=3D"text-align: start; margin: 0; paddi=
+ng: 0;" align=3D"start"><br>Set up your files for quicker turnaround with o=
+ur <a href=3D"https://sendcutsend.com/guidelines/" rel=3D"nofollow noopener=
+ noreferrer" target=3D"_blank" class=3D"intercom-content-link" style=3D"out=
+line: none !important; border-style: none;">Service Guidelines</a> and refe=
+rence design specs in the <a href=3D"https://sendcutsend.com/faq/what-are-t=
+he-material-specifications/#how-to-find" rel=3D"nofollow noopener noreferre=
+r" target=3D"_blank" class=3D"intercom-content-link" style=3D"outline: none=
+ !important; border-style: none;">Material Catalog</a>.<br>=E2=80=8B<br>Bec=
+ome a professional designer and expert SendCutSend user. <a href=3D"http://=
+sendcutsend.com/education" rel=3D"nofollow noopener noreferrer" target=3D"_=
+blank" class=3D"intercom-content-link" style=3D"outline: none !important; b=
+order-style: none;">SendCutSend Education series now available</a>.</p>=0D=
+=0A</td>=0D=0A    </tr>=0D=0A  </tbody>=0D=0A</table>=0D=0A=0D=0A          =
+    </div>=0D=0A            </td>=0D=0A        </tr>=0D=0A=0D=0A=0D=0A=0D=
+=0A      =0D=0A      <tr height=3D"32"></tr>=0D=0A      </tbody>=0D=0A    <=
+/table>=0D=0A    <table style=3D"border-spacing: 0; border-collapse: separa=
+te; table-layout: fixed;">=0D=0A      <tbody>=0D=0A        <tr>=0D=0A      =
+    <td style=3D"font-family: Helvetica, Arial, sans-serif; padding: 0;">=
+=0D=0A            <div dir=3D"ltr">=0D=0A              =0D=0A            </=
+div>=0D=0A          </td>=0D=0A        </tr>=0D=0A      </tbody>=0D=0A    <=
+/table>=0D=0A  </td>=0D=0A</tr>=0D=0A=0D=0A    </tbody>=0D=0A  </table>=0D=
+=0A<img src=3D"https://sendcutsend-9945d17feae2.intercom-mail.com/via/o=3Fh=
+=3Dceadac741f7fd822d763da13db118c4decd39030-u6ia6iw3_215472521675634_369387=
+83182" width=3D"1" height=3D"1" style=3D"display: block;" alt=3D"intercom">=
+=0D=0A=0D=0A<img border=3D"0" width=3D"1" height=3D"1" alt=3D"" src=3D"http=
+s://sendcutsend.intercom-mail.com/q/sK5Z3vqbBKnVlic0gJ-Xfw~~/AAAAARA~/aELQb=
+Y2Mp4SE4gyFM2pZvfQIs27dfcrtHQ0DwbmpGOeK6sF7vQNFcEPdPZuOmKcdaIJyCTzBF49sqn8C=
+Tr1_Gg~~">=0D=0A</body>=0D=0A</html>
+--_----hrlVb0nYCLs9TjZ5o9hvhg===_30/B8-27135-D5469596--
+
