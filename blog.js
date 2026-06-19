@@ -14,6 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleSpan.className = "toggle-control";
         contentChildren[0].appendChild(toggleSpan);
 
+        function getBrHeight(br) {
+            const parent = br.parentElement;
+            if (!parent) return 0;
+
+            const style = window.getComputedStyle(parent);
+            let lineHeight = style.lineHeight;
+
+            // If line-height is 'normal', calculate it based on font-size
+            if (lineHeight === 'normal') {
+                // A safe multiplier for 'normal' line-heights (usually 1.15 to 1.2 depending on font)
+                const fontSize = parseFloat(style.fontSize);
+                return fontSize * 1.2;
+            }
+
+            return parseFloat(lineHeight);
+        }
+
         const getHeightForFirstN = (n) => {
             article.style.height = 'auto';
             void article.offsetHeight;
@@ -32,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
             void article.offsetHeight;
 
             let height = contentChildren.reduce((acc, el) => {
+                if (el.tagName === 'BR')
+                    return acc + getBrHeight(el);
                 const style = getComputedStyle(el);
                 return acc + el.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
             }, 0);
