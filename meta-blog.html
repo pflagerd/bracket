@@ -54,6 +54,31 @@
 
   <main class="container">
     <section class="posts">
+      <article class="post" id="20260807T203500-0700">
+        <h3>How I diagnosed two articles that wouldn't Expand/Collapse</h3>
+        <p class="meta">Two articles in the main blog had working-looking Expand/Collapse controls that didn't actually resize anything when clicked.</p>
+        <p class="meta">Fri Aug  7 08:35:00 PM PDT 2026 by Daniel</p>
+        <p>The main blog's <code>blog.js</code> gives every &lt;article&gt; an Expand/Collapse toggle. Collapsed, it shows a short preview; expanded, it shows everything. It does this by measuring two heights and animating between them:</p>
+        <ul>
+          <li><code>getFullHeight()</code> &mdash; the height of every child element inside the &lt;article&gt;.</li>
+          <li><code>getHeightForFirstN(3)</code> &mdash; the height of just the first 3 child elements.</li>
+        </ul>
+        <p>The "Harry Sends..." email articles each consist of exactly 3 top-level children: an &lt;h3&gt;, a <code>&lt;p class="meta"&gt;</code> timestamp, and an &lt;iframe&gt; with the email content. Since "first 3 children" and "all children" were the same 3 elements, the collapsed and expanded heights came out identical &mdash; the toggle still flipped its label between "Expand" and "Collapse", but the article never visibly changed size.</p>
+        <p>The fix was to stop hardcoding <code>3</code> and instead compute the preview size from each article's own structure: the heading, plus however many <code>class="meta"</code> siblings immediately follow it.</p>
+        <pre><code>const getCollapsedChildCount = () => {
+    let count = 0;
+    if (contentChildren.length > 0 && /^H[1-6]$/.test(contentChildren[0].tagName)) {
+        count = 1;
+    }
+    while (count < contentChildren.length && contentChildren[count].classList.contains('meta')) {
+        count++;
+    }
+    return count;
+};</code></pre>
+        <p><code>applyState()</code> now calls <code>getHeightForFirstN(getCollapsedChildCount())</code> instead of <code>getHeightForFirstN(3)</code>. Every article's preview now scales to its own heading + meta block, so an article only fails to visibly toggle if its heading and meta lines really are its entire content.</p>
+        <p>To verify, I served the blog with <code>python3 -m http.server</code>, loaded it in Chromium via the claude-in-chrome extension, cleared <code>localStorage</code> to reset all articles to their default state, and clicked Expand/Collapse on both previously-broken articles and on a normal article to confirm nothing regressed.</p>
+      </article>
+
       <article class="post">
         <h3>Meta-Post about What I wish Chromium DevTools (and what Chromium) would do </h3>
         <p class="meta">Chromium is pretty great. Chromium DevTools is pretty great too. DevTools is almost a full featured IDE. To make it so, what would I want it to do?</p>
