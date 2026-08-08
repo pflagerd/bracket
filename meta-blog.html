@@ -66,7 +66,7 @@
         <p>That assumes every child sits on its own row, stacked one under the next &mdash; true for block-level elements like <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;table&gt;</code>. But <code>&lt;img&gt;</code> defaults to <code>display: inline</code>, and <code>blog.css</code> has no rule that changes that. Consecutive <code>&lt;img&gt;</code> tags flow like words in a sentence &mdash; they sit side by side and only wrap to a new line when they run out of horizontal room, exactly like text.</p>
         <p>The IKEA article has two runs of images (5 photos, then 7 more) that actually render as just 2 visual rows. I confirmed this in the browser console: all 5 images in the first run shared the same rendered <code>top</code> offset, and all 7 in the second run shared a different single <code>top</code>. But the summing loop added up all 12 images' heights as if each occupied its own row &mdash; 3318px of summed heights versus 767px of real visual content. Since the article has <code>overflow: hidden</code>, the box just got set to that inflated 3318px-ish height and the real content sat at the top, leaving a huge blank area below it.</p>
         <p>The fix was to stop reimplementing layout math and just read the browser's own measurements instead:</p>
-        <ul>
+        <ul style="margin-left: 2em;">
           <li><code>getFullHeight()</code> now simply returns <code>article.offsetHeight</code> once the article's height is set to <code>'auto'</code> &mdash; the browser has already laid out any wrapped inline content correctly, so there's nothing left to compute. This also made the old <code>getBrHeight()</code> special-case for <code>&lt;br&gt;</code> unnecessary, since native layout handles that too.</li>
           <li><code>getHeightForFirstN(n)</code> now takes the actual rendered <code>getBoundingClientRect()</code> of the Nth included child and measures down from the article's own top edge, rather than summing individual child heights.</li>
         </ul>
@@ -79,7 +79,7 @@
         <p class="meta">Two articles in the main blog had working-looking Expand/Collapse controls that didn't actually resize anything when clicked.</p>
         <p class="meta">Fri Aug  7 08:35:00 PM PDT 2026 by Daniel</p>
         <p>The main blog's <code>blog.js</code> gives every &lt;article&gt; an Expand/Collapse toggle. Collapsed, it shows a short preview; expanded, it shows everything. It does this by measuring two heights and animating between them:</p>
-        <ul>
+        <ul style="margin-left: 2em;">
           <li><code>getFullHeight()</code> &mdash; the height of every child element inside the &lt;article&gt;.</li>
           <li><code>getHeightForFirstN(3)</code> &mdash; the height of just the first 3 child elements.</li>
         </ul>
