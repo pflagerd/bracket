@@ -54,6 +54,26 @@
 
   <main class="container">
     <section class="posts">
+      <article class="post" id="20260807T211128-0700">
+        <h3>How I fixed the giant blank gap under image-heavy articles</h3>
+        <p class="meta">The "Went to IKEA to do some product comparisons." article had a massive empty space at the bottom whenever it was expanded.</p>
+        <p class="meta">Fri Aug  7 09:11:28 PM PDT 2026 by Daniel</p>
+        <p>Both of <code>blog.js</code>'s height functions, <code>getFullHeight()</code> and <code>getHeightForFirstN(n)</code>, computed an article's height by looping over its direct children and adding up each one's own <code>offsetHeight</code>:</p>
+        <pre><code>let height = contentChildren.reduce((acc, el) => {
+    const style = getComputedStyle(el);
+    return acc + el.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+}, 0);</code></pre>
+        <p>That assumes every child sits on its own row, stacked one under the next &mdash; true for block-level elements like <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;table&gt;</code>. But <code>&lt;img&gt;</code> defaults to <code>display: inline</code>, and <code>blog.css</code> has no rule that changes that. Consecutive <code>&lt;img&gt;</code> tags flow like words in a sentence &mdash; they sit side by side and only wrap to a new line when they run out of horizontal room, exactly like text.</p>
+        <p>The IKEA article has two runs of images (5 photos, then 7 more) that actually render as just 2 visual rows. I confirmed this in the browser console: all 5 images in the first run shared the same rendered <code>top</code> offset, and all 7 in the second run shared a different single <code>top</code>. But the summing loop added up all 12 images' heights as if each occupied its own row &mdash; 3318px of summed heights versus 767px of real visual content. Since the article has <code>overflow: hidden</code>, the box just got set to that inflated 3318px-ish height and the real content sat at the top, leaving a huge blank area below it.</p>
+        <p>The fix was to stop reimplementing layout math and just read the browser's own measurements instead:</p>
+        <ul>
+          <li><code>getFullHeight()</code> now simply returns <code>article.offsetHeight</code> once the article's height is set to <code>'auto'</code> &mdash; the browser has already laid out any wrapped inline content correctly, so there's nothing left to compute. This also made the old <code>getBrHeight()</code> special-case for <code>&lt;br&gt;</code> unnecessary, since native layout handles that too.</li>
+          <li><code>getHeightForFirstN(n)</code> now takes the actual rendered <code>getBoundingClientRect()</code> of the Nth included child and measures down from the article's own top edge, rather than summing individual child heights.</li>
+        </ul>
+        <p>The first version of this fix introduced a smaller follow-up bug: it added the article's own bottom padding as trailing space after the cut-off point, but since the next (hidden) child sits immediately after with no gap, that padding just revealed a sliver of its text. I caught this by actually looking at a screenshot of the collapsed articles, not just checking that the previously-broken one now worked. The real fix measures the actual rendered gap to whatever child follows the cutoff (which already accounts for CSS margins correctly, no matter what the next element is), and only falls back to the article's own padding when there's no next child at all &mdash; i.e. when the "preview" is actually the whole article.</p>
+        <p>Verified in Chromium via the claude-in-chrome extension: the IKEA article now expands to hug its content with no extra gap, the earlier Expand/Collapse fix (see the entry below) still works on the "Harry Sends..." articles, and an article with a <code>&lt;br&gt;</code> and several tables still renders with normal padding, not an inflated one.</p>
+      </article>
+
       <article class="post" id="20260807T203500-0700">
         <h3>How I diagnosed two articles that wouldn't Expand/Collapse</h3>
         <p class="meta">Two articles in the main blog had working-looking Expand/Collapse controls that didn't actually resize anything when clicked.</p>
