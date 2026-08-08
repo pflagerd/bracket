@@ -44,14 +44,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const lastChildBox = contentChildren[count - 1].getBoundingClientRect();
             const style = getComputedStyle(article);
 
-            // Trailing space after the cut: if a hidden child follows
-            // immediately, stop in the real (already-collapsed) gap before
-            // it rather than guessing, so we never bleed into its content.
+            // Trailing space after the cut: if hidden children follow, stop
+            // in the real (already-rendered) gap before whichever one starts
+            // highest up. Using the topmost of *all* remaining children,
+            // rather than just the next one in DOM order, matters when
+            // hidden inline siblings share a line and differ in height
+            // (e.g. a landscape and a portrait photo side by side): the
+            // shorter one's own top gets pushed down by baseline alignment,
+            // so it alone would understate where the hidden content starts.
             // Otherwise this preview shows everything, so end with the
             // article's own bottom padding like a normal full card.
-            const nextChild = contentChildren[count];
-            const trailingGap = nextChild
-                ? nextChild.getBoundingClientRect().top - lastChildBox.bottom
+            const remainingChildren = contentChildren.slice(count);
+            const trailingGap = remainingChildren.length > 0
+                ? Math.min(...remainingChildren.map(el => el.getBoundingClientRect().top)) - lastChildBox.bottom
                 : parseFloat(style.paddingBottom);
 
             return (lastChildBox.bottom - articleBox.top)
